@@ -1,45 +1,33 @@
-﻿using System;
+﻿// .NET
+using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode1
 {
-    class Program
+    internal static class Program
     {
-      
-        static void Main(string[] args)
+        private static void Main()
         {
-            string file = @"C: \Users\cameronlee\Repos\Advent of Code\Input\AOC1 input.txt";
+            const string inputPath = @"../../../../Input/AOC1 input.txt";
             int highestElfCalorieCount = 0;
             int elfCalorieCount = 0;
 
-            using (StreamReader sr = new StreamReader(file))
+            // Loop through lines in the file
+            foreach (string line in File.ReadLines(inputPath))
             {
-                while (sr.Peek() > -1)
+                if (string.IsNullOrEmpty(line))
                 {
-                    string currentLine = sr.ReadLine();
-                    if (String.IsNullOrEmpty(currentLine))
+                    if (highestElfCalorieCount < elfCalorieCount)
                     {
-                        if (highestElfCalorieCount < elfCalorieCount)
-                        {
-                            highestElfCalorieCount = elfCalorieCount;
-                        }
-                         elfCalorieCount = 0;
-                        continue;
+                        highestElfCalorieCount = elfCalorieCount;
                     }
-                    elfCalorieCount += Int32.Parse(currentLine);
-                    Console.WriteLine(elfCalorieCount);
-                    Console.WriteLine(highestElfCalorieCount);
-
-
-
+                    elfCalorieCount = 0;
+                    continue;
                 }
+                elfCalorieCount += int.Parse(line);
+                Console.WriteLine(elfCalorieCount);
+                Console.WriteLine(highestElfCalorieCount);
             }
-            //Console.WriteLine(no);
-            
         }
     }
 }

@@ -2,9 +2,9 @@
 using System;
 using System.Linq;
 
-namespace AdventOfCode1
+namespace AdventOfCode1_1
 {
-    public static class Program
+    internal static class Program
     {
         private static void Main(string[] args)
         {
@@ -15,7 +15,10 @@ namespace AdventOfCode1
             var calorieCounts = Utils.CalorieCountUtils.GetCalorieCounts(filepath);
 
             // Get the max calorie count
-            int maxCalorieCount = calorieCounts.Max();
+            int maxCalorieCount = calorieCounts
+                .OrderByDescending(x => x)
+                .Take(3)
+                .Sum();
 
             // Output max calorie count
             Console.WriteLine(maxCalorieCount);

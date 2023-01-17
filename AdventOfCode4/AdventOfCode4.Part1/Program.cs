@@ -1,47 +1,39 @@
-﻿using System;
+﻿// .NET
+using System;
 using System.IO;
-using System.Collections.Generic;
+using System.Linq;
+
+using AdventOfCode4;
 
 
 namespace AdventOfCode4
 {
     class Program
     {
+        private static readonly char[] Delimiters = { '-', ',' };
+
         static void Main(string[] args)
         {
-            string inputPath = @"../../../../input/AOC4 input.txt";
-            int containedWithinPair = 0;
+            // Get the input path
+            string inputPath = args.Single();
 
-            //Reads file and parses to int. Then compares the first side of the ints to the second to see if they are all contained
-            foreach (string line in File.ReadLines(inputPath))
-            {
-                char[] delimeters = { '-', ',' };
-                string[] elfAreaStrings = line.Split(delimeters);
-                List<int> elfAreaInts = new List<int>();
-                for (int i = 0; i < elfAreaStrings.Length; i++)
-                {
-                    elfAreaInts.Add(Int32.Parse(elfAreaStrings[i]));
-                }
+            // Get the number of assignment pairs where one assignment contains the other
+            int totalNumberWorkingSameArea = File.ReadLines(inputPath)
+                .Where(DoesOneAssignmentContainTheOther)
+                .Count();
 
-                if (elfAreaInts[0] <= elfAreaInts[2] && elfAreaInts[1] >= elfAreaInts[3])
-                {
-                    containedWithinPair++;
-                }
-                else if (elfAreaInts[0] >= elfAreaInts[2] && elfAreaInts[1] <= elfAreaInts[3])
-                {
-                    containedWithinPair++;
-                }
-                else if (elfAreaInts[0] == elfAreaInts[2] && elfAreaInts[1] == elfAreaInts[3]) 
-                {
-                    containedWithinPair++;
-                }
-                else
-                {
-                    continue;
-                }
+            // Write the result to the console
+            Console.WriteLine(totalNumberWorkingSameArea);
+        }
 
-                Console.WriteLine(containedWithinPair);
-            }
+        static bool DoesOneAssignmentContainTheOther(string line)
+        {
+            // Convert the string line into an int array
+            int[] assignmentPair = line.Split(Delimiters).Select(int.Parse).ToArray();
+
+            // Check if either assignment contains the other
+            return assignmentPair[0] <= assignmentPair[2] && assignmentPair[1] >= assignmentPair[3] ||
+                assignmentPair[0] >= assignmentPair[2] && assignmentPair[1] <= assignmentPair[3];
         }
     }
 }

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.2092
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode3.Part1", "AdventOfCode3\AdventOfCode3.Part1.csproj", "{CDC948B6-6F6E-4C5E-B56E-C5C0B681F0FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode3.Part1", "AdventOfCode3.Part1\AdventOfCode3.Part1.csproj", "{CDC948B6-6F6E-4C5E-B56E-C5C0B681F0FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode3.Part2", "AdventOfCode3.2\AdventOfCode3.Part2.csproj", "{FDA2505C-75EE-4BE0-9343-0420972FA8D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode3.Part2", "AdventOfCode3.Part2\AdventOfCode3.Part2.csproj", "{FDA2505C-75EE-4BE0-9343-0420972FA8D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

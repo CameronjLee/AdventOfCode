@@ -24,10 +24,9 @@ namespace AdventOfCode3
                 {
                     // finds what values are duplicated in each pair of lines
                     var elfIntersection1 = groupOfElves[0].Intersect(groupOfElves[1]);
-                    var elfIntersection2 = groupOfElves[0].Intersect(groupOfElves[2]);
 
                     // finds single value present in all 3 lines
-                    badgeItem = elfIntersection1.Intersect(elfIntersection2).Single();
+                    badgeItem = elfIntersection1.Intersect(groupOfElves[2]).Single();
 
                     // takes char and gives it numerical value from 1 -52 for a-Z
                     if (char.IsLower(badgeItem))

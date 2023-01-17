@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace AdventOfCode3
 {
@@ -7,47 +8,36 @@ namespace AdventOfCode3
     {
         static void Main(string[] args)
         {
-            using (StreamReader sr = new StreamReader(@"../../../../Input/AOC3 input.txt"))
+            string filePath = args.Single();
+            int totalPriorityOfItems = 0;
+            foreach (string line in File.ReadLines(filePath))
             {
-                int totalPriorityOfItems = 0;
-                string fileLine;
+                // splits input strings in half for two compartments
+                string compartment1 = line.Substring(0, (line.Length) / 2);
+                string compartment2 = line.Substring((line.Length) / 2, (line.Length) / 2);
 
-                // Loops through lines and compares strings to find repeated values and priority
-                while ((fileLine = sr.ReadLine()) != null)
+                int priorityOfDuplicateItem = 0;
+
+                // finds the value that is present in both compartments
+                char duplicateItem = compartment1.Intersect(compartment2).Single();
+
+                // takes char and gives it numerical value from 1 -52 for a-Z
+                if (char.IsLower(duplicateItem))
                 {
-                    int compartmentContentsLength = (fileLine.Length)/2;
-                    string compartment1 = fileLine.Substring(0, compartmentContentsLength);
-                    string compartment2 = fileLine.Substring(compartmentContentsLength, compartmentContentsLength);
-                    char duplicateItem = 'A';
-                    int priorityOfItem = 0;
-                    
-                    foreach (char item in compartment1)
-                    {
-                        foreach (char item2 in compartment2)
-                        {
-                            if (item == item2)
-                            {
-                                duplicateItem = item;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (char.IsLower(duplicateItem))
-                    {
-                        priorityOfItem = duplicateItem - 96;
-                    }
-                    else if (char.IsUpper(duplicateItem))
-                    {
-                        priorityOfItem = duplicateItem - 38;
-                    }
-
-                    totalPriorityOfItems += priorityOfItem;
-
-                    //Console.WriteLine(duplicateItem);
-                    //Console.WriteLine(priorityOfItem);
-                    //Console.WriteLine(totalPriorityOfItems);
+                    priorityOfDuplicateItem = duplicateItem - 'a' + 1;
                 }
+                else if (char.IsUpper(duplicateItem))
+                {
+                    priorityOfDuplicateItem = duplicateItem - 'A' + 27;
+                }
+
+                // adds to totalPriority for all the duplicated priority values
+                totalPriorityOfItems += priorityOfDuplicateItem;
+
+                Console.WriteLine(duplicateItem);
+                Console.WriteLine(priorityOfDuplicateItem);
+                Console.WriteLine(totalPriorityOfItems);
+                
             }
         }
     }

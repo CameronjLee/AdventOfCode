@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace AdventOfCode3
@@ -8,42 +9,45 @@ namespace AdventOfCode3
     {
         static void Main(string[] args)
         {
-            string inputPath = @"../../../../Input/AOC3 input.txt";
-            int totalPriorityOfItems = 0;
-            char badgeItem = 'A';
-            int priorityOfBadge = 0;
-            List<string> groupOfElves = new List<string>();
+            string filePath = args.Single();
 
-            // Loops through lines in fil and appends in list then finds values of repeated chars
-            foreach (string line in File.ReadLines(inputPath))
+            int totalPriorityOfItems = 0;
+            char badgeItem;
+            int priorityOfBadge;
+            List<string> groupOfElves = new List<string>();
+            
+            foreach (string line in File.ReadLines(filePath))
             {
+                // appends elves into group
                 groupOfElves.Add(line);
-                Console.WriteLine(groupOfElves.Count);
                 if (groupOfElves.Count == 3)
                 {
-                    foreach (char item in groupOfElves[0])
-                    {
-                        if(groupOfElves[1].Contains(char.ToString(item)) && groupOfElves[2].Contains(char.ToString(item)))
-                        {
-                            badgeItem = item;
-                        }
-                    }
-                    groupOfElves.Clear();
+                    // finds what values are duplicated in each pair of lines
+                    var elfIntersection1 = groupOfElves[0].Intersect(groupOfElves[1]);
+                    var elfIntersection2 = groupOfElves[0].Intersect(groupOfElves[2]);
 
+                    // finds single value present in all 3 lines
+                    badgeItem = elfIntersection1.Intersect(elfIntersection2).Single();
+
+                    // takes char and gives it numerical value from 1 -52 for a-Z
                     if (char.IsLower(badgeItem))
                     {
-                        priorityOfBadge = badgeItem - 96;
+                        priorityOfBadge = badgeItem - 'a' + 1;
                     }
-                    else if (char.IsUpper(badgeItem))
+                    else 
                     {
-                        priorityOfBadge = badgeItem - 38;
+                        priorityOfBadge = badgeItem - 'A' + 27;
                     }
-                    totalPriorityOfItems += priorityOfBadge;
-                }
 
-                //Console.WriteLine(badgeItem);
-                //Console.WriteLine(priorityOfBadge);
-                //Console.WriteLine(totalPriorityOfItems);
+                    // adds to totalPriority for all the duplicated priority values
+                    totalPriorityOfItems += priorityOfBadge;
+
+                    groupOfElves.Clear();
+
+                    Console.WriteLine(badgeItem);
+                    Console.WriteLine(priorityOfBadge);
+                }
+                Console.WriteLine(totalPriorityOfItems);
             }
         }
     }

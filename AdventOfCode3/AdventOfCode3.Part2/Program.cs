@@ -12,42 +12,41 @@ namespace AdventOfCode3
             string filePath = args.Single();
 
             int totalPriorityOfItems = 0;
-            char badgeItem;
-            int priorityOfBadge;
-            List<string> groupOfElves = new List<string>();
+            List<string> groupOfElvesItems = new List<string>();
             
             foreach (string line in File.ReadLines(filePath))
             {
                 // appends elves into group
-                groupOfElves.Add(line);
-                if (groupOfElves.Count == 3)
+                groupOfElvesItems.Add(line);
+                if (groupOfElvesItems.Count == 3)
                 {
-                    // finds what values are duplicated in each pair of lines
-                    var elfIntersection1 = groupOfElves[0].Intersect(groupOfElves[1]);
-
-                    // finds single value present in all 3 lines
-                    badgeItem = elfIntersection1.Intersect(groupOfElves[2]).Single();
-
-                    // takes char and gives it numerical value from 1 -52 for a-Z
-                    if (char.IsLower(badgeItem))
-                    {
-                        priorityOfBadge = badgeItem - 'a' + 1;
-                    }
-                    else 
-                    {
-                        priorityOfBadge = badgeItem - 'A' + 27;
-                    }
-
-                    // adds to totalPriority for all the duplicated priority values
-                    totalPriorityOfItems += priorityOfBadge;
-
-                    groupOfElves.Clear();
-
-                    Console.WriteLine(badgeItem);
-                    Console.WriteLine(priorityOfBadge);
+                    totalPriorityOfItems += GetPriority(groupOfElvesItems);
+                    groupOfElvesItems.Clear();
                 }
                 Console.WriteLine(totalPriorityOfItems);
             }
+        }
+
+        static int GetPriority(List<string> groupOfElvesItems)
+        {
+            int priorityOfBadge;
+            // finds what values are duplicated in the first two lines
+            var elfIntersection1 = groupOfElvesItems[0].Intersect(groupOfElvesItems[1]);
+
+            // finds single value present in all 3 lines
+            char badgeItem = elfIntersection1.Intersect(groupOfElvesItems[2]).Single();
+
+            // takes char and gives it numerical value from 1 -52 for a-Z
+            if (char.IsLower(badgeItem))
+            {
+                priorityOfBadge = badgeItem - 'a' + 1;
+            }
+            else
+            {
+                priorityOfBadge = badgeItem - 'A' + 27;
+            }
+            return priorityOfBadge;
+            
         }
     }
 }
